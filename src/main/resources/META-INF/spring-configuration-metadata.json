@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "name": "common.exception-handler"
+    }
+  ],
+  "properties": [
+    {
+      "name": "common.exception-handler.enable",
+      "type": "java.lang.Boolean",
+      "description": "是否启用统一异常处理",
+      "defaultValue": true
+    }
+  ],
+  "hints": [
+    {
+      "name": "common.exception-handler.enable",
+      "values": [
+        {
+          "value": true,
+          "description": "启用统一异常处理"
+        },
+        {
+          "value": false,
+          "description": "禁用统一异常处理"
+        }
+      ]
+    }
+  ]
+}
