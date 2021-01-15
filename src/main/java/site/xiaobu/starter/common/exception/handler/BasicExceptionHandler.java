@@ -1,4 +1,4 @@
-package site.xiaobu.starter.common.exception;
+package site.xiaobu.starter.common.exception.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import site.xiaobu.starter.common.common.CommonResponse;
 import site.xiaobu.starter.common.common.Resp;
+import site.xiaobu.starter.common.exception.ApplicationException;
 
 import javax.annotation.PostConstruct;
 
@@ -31,9 +32,9 @@ public class BasicExceptionHandler {
         log.info("基础异常处理器初始化完毕...");
     }
 
-    @ExceptionHandler(BusinessException.class)
-    public CommonResponse<?> handlerNullPointerException(BusinessException e) {
-        log.error("发生业务异常", e);
+    @ExceptionHandler(ApplicationException.class)
+    public CommonResponse<?> handlerNullPointerException(ApplicationException e) {
+        log.error("发成程序异常", e);
         return Resp.fail(e.getCode(), e.getMessage());
     }
 

@@ -6,12 +6,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import site.xiaobu.starter.common.exception.BasicExceptionHandler;
-import site.xiaobu.starter.common.exception.DataAccessExceptionHandler;
-import site.xiaobu.starter.common.exception.ServletExceptionHandler;
-import site.xiaobu.starter.common.exception.ValidationExceptionHandler;
+import site.xiaobu.starter.common.exception.handler.BasicExceptionHandler;
+import site.xiaobu.starter.common.exception.handler.DataAccessExceptionHandler;
+import site.xiaobu.starter.common.exception.handler.ServletExceptionHandler;
+import site.xiaobu.starter.common.exception.handler.ValidationExceptionHandler;
 
 /**
  * @Description: 统一异常处理配置

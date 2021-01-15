@@ -1,4 +1,4 @@
-package site.xiaobu.starter.common.exception;
+package site.xiaobu.starter.common.exception.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;

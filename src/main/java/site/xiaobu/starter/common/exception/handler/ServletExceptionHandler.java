@@ -1,4 +1,4 @@
-package site.xiaobu.starter.common.exception;
+package site.xiaobu.starter.common.exception.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
