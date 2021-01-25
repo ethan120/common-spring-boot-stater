@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import site.xiaobu.starter.common.common.CommonResponse;
+import site.xiaobu.starter.common.common.R;
 import site.xiaobu.starter.common.common.Resp;
 import site.xiaobu.starter.common.exception.enums.SQLExEnum;
 
@@ -33,7 +33,7 @@ public class DataAccessExceptionHandler {
      * @return 异常结果
      */
     @ExceptionHandler(value = DataAccessException.class)
-    public CommonResponse<?> handleDataAccessException(DataAccessException e) {
+    public R<?> handleDataAccessException(DataAccessException e) {
         log.error("发生数据访问异常", e);
         SQLExEnum exEnum = SQLExEnum.valueOf(e.getClass().getSimpleName());
         int code = exEnum.getCode();

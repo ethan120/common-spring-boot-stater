@@ -10,7 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import site.xiaobu.starter.common.common.CommonResponse;
+import site.xiaobu.starter.common.common.R;
 import site.xiaobu.starter.common.common.Resp;
 
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ public class ValidationExceptionHandler {
      * @return 异常结果
      */
     @ExceptionHandler(value = {BindException.class, MethodArgumentNotValidException.class})
-    public CommonResponse<?> handleValidException(Exception e) {
+    public R<?> handleValidException(Exception e) {
         log.error("发生对象数据验证异常", e);
         BindingResult bindingResult = null;
         if (e instanceof BindException) {
@@ -63,7 +63,7 @@ public class ValidationExceptionHandler {
      * @return 异常结果
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public CommonResponse<?> handleMethodValidException(ConstraintViolationException e) throws JsonProcessingException {
+    public R<?> handleMethodValidException(ConstraintViolationException e) throws JsonProcessingException {
         log.error("发生方法数据验证异常", e);
         List<Object> listRes = new ArrayList<>();
         e.getConstraintViolations().forEach(constraintViolation -> {
@@ -87,7 +87,7 @@ public class ValidationExceptionHandler {
      * @param bindingResult 绑定结果
      * @return 异常结果
      */
-    private CommonResponse<?> wrapperBindingResult(BindingResult bindingResult) {
+    private R<?> wrapperBindingResult(BindingResult bindingResult) {
         List<Object> listRes = new ArrayList<>();
         for (ObjectError error : bindingResult.getAllErrors()) {
             Map<String, Object> map = new TreeMap<>();

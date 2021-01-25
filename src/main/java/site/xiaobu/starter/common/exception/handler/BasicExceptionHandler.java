@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import site.xiaobu.starter.common.common.CommonResponse;
+import site.xiaobu.starter.common.common.R;
 import site.xiaobu.starter.common.common.Resp;
 import site.xiaobu.starter.common.exception.ApplicationException;
 
@@ -33,13 +33,13 @@ public class BasicExceptionHandler {
     }
 
     @ExceptionHandler(ApplicationException.class)
-    public CommonResponse<?> handlerNullPointerException(ApplicationException e) {
-        log.error("发成程序异常", e);
+    public R<?> handlerNullPointerException(ApplicationException e) {
+        log.error("发生程序异常", e);
         return Resp.fail(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public CommonResponse<?> handlerNullPointerException(NullPointerException e) {
+    public R<?> handlerNullPointerException(NullPointerException e) {
         log.error("发生空指针异常", e);
         if (PROD.equals(profile)) {
             return Resp.fail(500, "未知异常,请联系管理员");
@@ -48,7 +48,7 @@ public class BasicExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public CommonResponse<?> handlerException(Exception e) {
+    public R<?> handlerException(Exception e) {
         log.error("发生未知异常", e);
         if (PROD.equals(profile)) {
             return Resp.fail(500, "未知异常,请联系管理员");

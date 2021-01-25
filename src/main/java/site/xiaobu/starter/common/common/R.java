@@ -1,6 +1,6 @@
 package site.xiaobu.starter.common.common;
 
-public class CommonResponse<T> implements IResponse {
+public class R<T> implements IResponse {
 
     private int code;
 
@@ -14,7 +14,7 @@ public class CommonResponse<T> implements IResponse {
         return this.success;
     }
 
-    protected CommonResponse(boolean success, int code, String message, T data) {
+    protected R(boolean success, int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;

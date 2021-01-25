@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import site.xiaobu.starter.common.exception.handler.BasicExceptionHandler;
 import site.xiaobu.starter.common.exception.handler.DataAccessExceptionHandler;
 import site.xiaobu.starter.common.exception.handler.ServletExceptionHandler;

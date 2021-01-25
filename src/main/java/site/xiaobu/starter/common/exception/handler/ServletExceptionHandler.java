@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import site.xiaobu.starter.common.common.CommonResponse;
+import site.xiaobu.starter.common.common.R;
 import site.xiaobu.starter.common.common.Resp;
 import site.xiaobu.starter.common.exception.enums.ServletExEnum;
 
@@ -59,7 +59,7 @@ public class ServletExceptionHandler {
             MissingServletRequestPartException.class,
             AsyncRequestTimeoutException.class
     })
-    public CommonResponse<?> handleServletException(Exception e) {
+    public R<?> handleServletException(Exception e) {
         log.info("发生Servlet异常", e);
         ServletExEnum servletExceptionEnum = ServletExEnum.valueOf(e.getClass().getSimpleName());
         int code = servletExceptionEnum.getCode();
