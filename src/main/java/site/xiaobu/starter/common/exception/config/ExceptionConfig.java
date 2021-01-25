@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import site.xiaobu.starter.common.exception.handler.BasicExceptionHandler;
 import site.xiaobu.starter.common.exception.handler.DataAccessExceptionHandler;
 import site.xiaobu.starter.common.exception.handler.ServletExceptionHandler;
@@ -20,6 +18,7 @@ import site.xiaobu.starter.common.exception.handler.ValidationExceptionHandler;
  * @Date: 2020-12-14 15:01
  * @Version: V1.0
  */
+@ConditionalOnMissingBean(ExceptionConfig.class)
 @ConditionalOnProperty(name = "common.exception-handler.enable", matchIfMissing = true, havingValue = "true")
 public class ExceptionConfig {
     @Bean
