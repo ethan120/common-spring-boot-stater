@@ -1,23 +1,24 @@
 package site.xiaobu.starter.common.exception.enums;
 
 import site.xiaobu.starter.common.base.IResponse;
+import site.xiaobu.starter.common.base.Resp;
 
 public enum ServletExEnum implements IResponse {
 
-    NoHandlerFoundException(404, "没有对应的处理器"),
-    HttpRequestMethodNotSupportedException(405, "不支持的请求方式"),
-    HttpMediaTypeNotSupportedException(415, "不支持的Content-Type"),
-    MissingPathVariableException(400, "缺少路径参数"),
-    MissingServletRequestParameterException(400, "缺少请求参数"),
-    TypeMismatchException(400, "参数类型不匹配"),
-    HttpMediaTypeNotAcceptableException(400, "前端不支持的Content-Type"),
-    MissingServletRequestPartException(400, "请求缺失了一部分"),
-    AsyncRequestTimeoutException(400, "异步请求超时"),
+    NoHandlerFoundException(Resp.NO_HANDLER, "没有对应的处理器"),
+    HttpRequestMethodNotSupportedException(Resp.NOT_SUPPORT_METHOD, "不支持的请求方式"),
+    HttpMediaTypeNotSupportedException(Resp.NOT_SUPPORT_CONTENT_TYPE, "不支持的Content-Type"),
+    MissingPathVariableException(Resp.FAIL, "缺少路径参数"),
+    MissingServletRequestParameterException(Resp.FAIL, "缺少请求参数"),
+    TypeMismatchException(Resp.FAIL, "参数类型不匹配"),
+    HttpMediaTypeNotAcceptableException(Resp.FAIL, "前端不支持的Content-Type"),
+    MissingServletRequestPartException(Resp.FAIL, "请求缺失了一部分"),
+    AsyncRequestTimeoutException(Resp.FAIL, "异步请求超时"),
 
-    HttpMessageNotReadableException(400, "序列化请求值失败"),
-    HttpMessageNotWritableException(400, "序列化响应值失败"),
-    ServletRequestBindingException(400, "参数绑定失败"),
-    ConversionNotSupportedException(400, "类型转换失败");
+    HttpMessageNotReadableException(Resp.FAIL, "序列化请求值失败"),
+    HttpMessageNotWritableException(Resp.FAIL, "序列化响应值失败"),
+    ServletRequestBindingException(Resp.FAIL, "参数绑定失败"),
+    ConversionNotSupportedException(Resp.FAIL, "类型转换失败");
 
     ServletExEnum(int code, String message) {
         this.message = message;

@@ -42,17 +42,17 @@ public class BasicExceptionHandler {
     public R<?> handlerNullPointerException(NullPointerException e) {
         log.error("发生空指针异常", e);
         if (PROD.equals(profile)) {
-            return Resp.fail(500, "未知异常,请联系管理员");
+            return Resp.fail(Resp.INTERNAL_ERROR, "未知异常,请联系管理员");
         }
-        return Resp.fail(500, "空指针异常");
+        return Resp.fail(Resp.INTERNAL_ERROR, "空指针异常");
     }
 
     @ExceptionHandler(Exception.class)
     public R<?> handlerException(Exception e) {
         log.error("发生未知异常", e);
         if (PROD.equals(profile)) {
-            return Resp.fail(500, "未知异常,请联系管理员");
+            return Resp.fail(Resp.INTERNAL_ERROR, "未知异常,请联系管理员");
         }
-        return Resp.fail(500, e.getMessage());
+        return Resp.fail(Resp.INTERNAL_ERROR, e.getMessage());
     }
 }

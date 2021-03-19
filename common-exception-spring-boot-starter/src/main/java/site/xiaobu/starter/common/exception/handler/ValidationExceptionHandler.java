@@ -76,7 +76,7 @@ public class ValidationExceptionHandler {
             map.put("invalidValue", constraintViolation.getInvalidValue());
             listRes.add(map);
         });
-        return Resp.fail(400, "参数校验发生异常", listRes);
+        return Resp.fail(Resp.FAIL, "参数校验发生异常", listRes);
     }
 
     //----------------------------------------------------------------------------------------------//
@@ -102,7 +102,7 @@ public class ValidationExceptionHandler {
             map.put("validationRuleDescription", error.getDefaultMessage());
             listRes.add(map);
         }
-        return Resp.fail(400, "参数校验发生异常", listRes);
+        return Resp.fail(Resp.FAIL, "参数校验发生异常", listRes);
     }
 
 }

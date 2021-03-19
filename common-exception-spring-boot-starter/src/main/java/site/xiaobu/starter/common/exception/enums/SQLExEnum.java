@@ -1,6 +1,7 @@
 package site.xiaobu.starter.common.exception.enums;
 
 import site.xiaobu.starter.common.base.IResponse;
+import site.xiaobu.starter.common.base.Resp;
 
 /**
  * @Description: SQL相关异常
@@ -10,7 +11,7 @@ import site.xiaobu.starter.common.base.IResponse;
  */
 public enum SQLExEnum implements IResponse {
 
-    DataAccessException(500, "数据访问错误");
+    DataAccessException(Resp.INTERNAL_ERROR, "数据访问错误");
 
     SQLExEnum(int code, String message) {
         this.message = message;
