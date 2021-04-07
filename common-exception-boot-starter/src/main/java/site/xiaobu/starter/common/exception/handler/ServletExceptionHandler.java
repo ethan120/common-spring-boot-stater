@@ -1,5 +1,6 @@
 package site.xiaobu.starter.common.exception.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -24,15 +25,11 @@ import site.xiaobu.starter.common.exception.enums.ServletExEnum;
 import javax.annotation.PostConstruct;
 
 /**
- * @Description: Servlet层的异常处理
- * @Author: zhanghuan
- * @Date: 2020-12-28 16:49
- * @Version: V1.0
+ * Servlet层的异常处理
  */
+@Slf4j
 @RestControllerAdvice
 public class ServletExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(ServletExceptionHandler.class);
-
     @PostConstruct
     public void init() {
         log.info("web异常处理初始化完毕...");
@@ -63,6 +60,6 @@ public class ServletExceptionHandler {
         log.info("发生Servlet异常", e);
         ServletExEnum servletExceptionEnum = ServletExEnum.valueOf(e.getClass().getSimpleName());
         int code = servletExceptionEnum.getCode();
-        return Resp.fail(code, servletExceptionEnum.getMessage());
+        return Resp.newFailed(code, servletExceptionEnum.getMessage());
     }
 }

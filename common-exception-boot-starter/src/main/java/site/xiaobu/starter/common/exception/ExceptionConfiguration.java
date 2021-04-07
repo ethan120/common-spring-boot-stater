@@ -14,10 +14,8 @@ import site.xiaobu.starter.common.exception.handler.ServletExceptionHandler;
 import site.xiaobu.starter.common.exception.handler.ValidationExceptionHandler;
 
 /**
- * @Description: 统一异常处理配置
- * @Author: zhanghuan
- * @Date: 2020-12-14 15:01
- * @Version: V1.0
+ * 统一异常处理处理器配置
+ *
  */
 @SpringBootConfiguration
 @ConditionalOnMissingBean(ExceptionConfiguration.class)

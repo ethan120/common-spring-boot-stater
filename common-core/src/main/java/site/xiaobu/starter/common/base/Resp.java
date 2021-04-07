@@ -1,63 +1,68 @@
 package site.xiaobu.starter.common.base;
 
-public class Resp {
+import site.xiaobu.starter.common.constant.HttpStatus;
 
-    public static final int SUCCESS = 200;
-    public static final int PART_SUCCESS = 206;
-    public static final int FAIL = 400;
-    public static final int INTERNAL_ERROR = 500;
-
-    public static final int NOT_IMPLEMENTED = 402;
-    public static final int NO_HANDLER  = 404;
-    public static final int NOT_SUPPORT_METHOD  = 405;
-    public static final int NOT_SUPPORT_CONTENT_TYPE  = 415;
-
+/**
+ * 工具类，用于构建响应对象
+ * */
+public final class Resp {
     /**
-     * 生成失败情况的响应值
+     * 生成失败情况的响应对象
      */
-    public static R<?> fail(int code, String msg) {
+    public static R<?> newFailed(int code, String msg) {
         return new R<>(false, code, msg, null);
     }
 
     /**
-     * 生成失败情况的响应值带数据
+     * 生成失败情况的响应对象
      */
-    public static <T> R<T> fail(int code, String msg, T data) {
+    public static <T> R<T> newFailed(int code, String msg, T data) {
         return new R<>(false, code, msg, data);
     }
 
     /**
-     * 生成成功情况的响应值
+     * 生成成功情况的响应对象
      */
-    public static <T> R<T> succeed(int code, String msg, T data) {
+    public static <T> R<T> newSucceed(int code, String msg, T data) {
         return new R<>(true, code, msg, data);
     }
 
     /**
-     * 生成 400 状态响应值
+     * 生成 400 状态响应对象
+     * 逻辑执行异常或业务失败
      */
     public static R<?> new400(String msg) {
-        return new R<>(false, FAIL, msg, null);
+        return new R<>(false, HttpStatus.FAIL, msg, null);
     }
 
     /**
-     * 生成 200 状态响应值
+     * 生成 200 状态响应对象
+     * 逻辑执行正常且业务成功
      */
     public static <T> R<T> new200(String msg, T data) {
-        return new R<>(true, SUCCESS, msg, data);
+        return new R<>(true, HttpStatus.SUCCESS, msg, data);
     }
 
     /**
-     * 生成 200 状态响应值
+     * 生成 200 状态响应对象
+     * 逻辑执行正常且业务成功
      */
     public static <T> R<T> new200(String msg) {
-        return new R<>(true, SUCCESS, msg, null);
+        return new R<>(true, HttpStatus.SUCCESS, msg, null);
     }
 
     /**
-     * 生成 206 状态响应值
+     * 生成 206 状态响应对象
+     * 批量任务中,逻辑执行正常但部分业务失败
      */
     public static <T> R<T> new206(String msg) {
-        return new R<>(true, PART_SUCCESS, msg, null);
+        return new R<>(true, HttpStatus.PART_SUCCESS, msg, null);
+    }
+
+    /**
+     * 生成完全可自定义的响应对象
+     * */
+    public static <T> R<T> newResp(boolean success,int code,String msg,T data){
+        return new R<>(success,code,msg,data);
     }
 }

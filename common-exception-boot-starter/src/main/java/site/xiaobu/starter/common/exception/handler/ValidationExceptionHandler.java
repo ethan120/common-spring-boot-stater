@@ -1,8 +1,7 @@
 package site.xiaobu.starter.common.exception.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import site.xiaobu.starter.common.base.R;
 import site.xiaobu.starter.common.base.Resp;
+import site.xiaobu.starter.common.constant.HttpStatus;
 
 import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolationException;
@@ -22,14 +22,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * @Description: 数据校验方面的异常处理
- * @Author: zhanghuan
- * @Date: 2020-12-28 16:53
- * @Version: V1.0
+ * 数据校验方面的异常处理
  */
+@Slf4j
 @RestControllerAdvice
 public class ValidationExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(ValidationExceptionHandler.class);
 
     @PostConstruct
     public void init() {
@@ -76,7 +73,7 @@ public class ValidationExceptionHandler {
             map.put("invalidValue", constraintViolation.getInvalidValue());
             listRes.add(map);
         });
-        return Resp.fail(Resp.FAIL, "参数校验发生异常", listRes);
+        return Resp.newFailed(HttpStatus.FAIL, "参数校验发生异常", listRes);
     }
 
     //----------------------------------------------------------------------------------------------//
@@ -102,7 +99,7 @@ public class ValidationExceptionHandler {
             map.put("validationRuleDescription", error.getDefaultMessage());
             listRes.add(map);
         }
-        return Resp.fail(Resp.FAIL, "参数校验发生异常", listRes);
+        return Resp.newFailed(HttpStatus.FAIL, "参数校验发生异常", listRes);
     }
 
 }

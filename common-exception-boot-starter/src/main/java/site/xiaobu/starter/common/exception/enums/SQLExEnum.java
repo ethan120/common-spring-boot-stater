@@ -1,17 +1,14 @@
 package site.xiaobu.starter.common.exception.enums;
 
 import site.xiaobu.starter.common.base.IResponse;
-import site.xiaobu.starter.common.base.Resp;
+import site.xiaobu.starter.common.constant.HttpStatus;
 
 /**
- * @Description: SQL相关异常
- * @Author: zhanghuan
- * @Date: 2020-12-14 14:58
- * @Version: V1.0
+ * SQL 操作相关异常
  */
 public enum SQLExEnum implements IResponse {
 
-    DataAccessException(Resp.INTERNAL_ERROR, "数据访问错误");
+    DataAccessException(HttpStatus.INTERNAL_ERROR, "数据访问错误");
 
     SQLExEnum(int code, String message) {
         this.message = message;

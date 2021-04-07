@@ -1,186 +1,260 @@
 package site.xiaobu.starter.common.exception.util;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.BooleanUtil;
+import cn.hutool.core.util.StrUtil;
 import site.xiaobu.starter.common.base.IResponse;
-import org.springframework.util.StringUtils;
-import site.xiaobu.starter.common.exception.exception.ApplicationException;
+import site.xiaobu.starter.common.exception.exception.AssertException;
 
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
- * @Description: 断言工具类
- * @Author: zhanghuan
- * @Date: 2021-01-06 17:47
- * @Version: V1.0
+ * 断言工具类
  */
-public class Asserts {
-    public static void notNull(Object obj, IResponse response) {
-        if (obj == null) {
-            throw new ApplicationException(response);
-        }
+public final class Asserts {
+    /**
+     * 创建一个断言对象
+     */
+    public static InternalAssert asserts() {
+        return new InternalAssert();
     }
 
-    public static void isNull(Object obj, IResponse response) {
-        if (obj != null) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void notEmpty(String str, IResponse response) {
-        if (StringUtils.isEmpty(str)) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void isEmpty(String str, IResponse response) {
-        if (!StringUtils.isEmpty(str)) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void notEmpty(Collection<?> collection, IResponse response) {
-        if (collection == null || collection.size() == 0) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void isEmpty(Collection<?> collection, IResponse response) {
-        if (collection != null && collection.size() > 0) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void notEmpty(Map<?, ?> map, IResponse response) {
-        if (map == null || map.size() == 0) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void isEmpty(Map<?, ?> map, IResponse response) {
-        if (map != null && map.size() > 0) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void notEmpty(Object[] array, IResponse response) {
-        if (array == null || array.length == 0) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void isEmpty(Object[] array, IResponse response) {
-        if (array != null && array.length > 0) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void isTrue(boolean expression, IResponse response) {
-        if (!expression) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void isFalse(boolean expression, IResponse response) {
-        if (expression) {
-            throw new ApplicationException(response);
-        }
-    }
-
-    public static void contains(String sourceStr, CharSequence subStr, IResponse response) {
-        if (!StringUtils.isEmpty(sourceStr) && !StringUtils.isEmpty(sourceStr) && subStr.length() < sourceStr.length()) {
-            if (!sourceStr.contains(subStr)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void contains(Collection<?> source, Object target, IResponse response) {
-        if (source != null && source.size() > 0 && target != null) {
-            if (!source.contains(target)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void contains(Object[] source, Object target, IResponse response) {
-        if (source != null && source.length > 0 && target != null) {
-            boolean contains = false;
-            for (Object o : source) {
-                if (o.equals(target)) {
-                    contains = true;
-                    break;
-                }
-            }
-            if (!contains) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void containsKey(Map<?, ?> map, Object key, IResponse response) {
-        if (map != null && map.size() > 0) {
-            if (!map.containsKey(key)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void containsValue(Map<?, ?> map, Object value, IResponse response) {
-        if (map != null && map.size() > 0) {
-            if (!map.containsValue(value)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void notContains(String sourceStr, CharSequence subStr, IResponse response) {
-        if (!StringUtils.isEmpty(sourceStr) && !StringUtils.isEmpty(sourceStr) && subStr.length() < sourceStr.length()) {
-            if (sourceStr.contains(subStr)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void notContains(Collection<?> source, Object target, IResponse response) {
-        if (source != null && source.size() > 0 && target != null) {
-            if (source.contains(target)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void notContains(Object[] source, Object target, IResponse response) {
-        if (source != null && source.length > 0 && target != null) {
-            for (Object o : source) {
-                if (o.equals(target)) {
-                    throw new ApplicationException(response);
-                }
-            }
-        }
-    }
-
-    public static void notContainsKey(Map<?, ?> map, Object key, IResponse response) {
-        if (map != null && map.size() > 0) {
-            if (map.containsKey(key)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
-
-    public static void notContainsValue(Map<?, ?> map, Object value, IResponse response) {
-        if (map != null && map.size() > 0) {
-            if (map.containsValue(value)) {
-                throw new ApplicationException(response);
-            }
-        }
-    }
 
     /**
-     * 断言一个状态,并抛出异常
+     * 内部断言类
      */
-    public static void state(Supplier supplier,IResponse response) {
-        if(!supplier.supply()){
-            throw new ApplicationException(response);
+    public static class InternalAssert {
+        /**
+         * 当前断言情况
+         */
+        private boolean status = true;
+
+        /**
+         * 如果不满足断言条件,抛出断言异常
+         *
+         * @param res 响应对象
+         */
+        public void ifNot(IResponse res) {
+            if (!this.status) {
+                throw new AssertException(res);
+            }
+        }
+
+        /**
+         * 如果不满足断言条件,执行自定义逻辑
+         *
+         * @param function 自定义逻辑对象
+         */
+        public Object ifNot(IfNotFunction function) {
+            if (!this.status) {
+                return function.exec();
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个对象不是 null
+         */
+        public InternalAssert notNull(Object obj) {
+            if (!this.status) return this;
+            if (obj == null) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个对象为 null
+         */
+        public InternalAssert isNull(Object obj) {
+            if (!this.status) return this;
+            if (obj != null) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个对象非空
+         * 可以断言的类型有：
+         * Collection
+         * Iterable
+         * Iterator
+         * Map
+         * Enumeration
+         * CharSequence
+         */
+        public InternalAssert notEmpty(Object obj) {
+            if (!this.status) return this;
+            if (obj instanceof Collection) {
+                if (CollUtil.isEmpty((Collection<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Iterable) {
+                if (CollUtil.isEmpty((Iterable<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Iterator) {
+                if (CollUtil.isEmpty((Iterator<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Map) {
+                if (CollUtil.isEmpty((Map<?, ?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Enumeration) {
+                if (CollUtil.isEmpty((Enumeration<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof CharSequence) {
+                if (StrUtil.isEmpty((CharSequence) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个对象为空
+         * 可以断言的类型有：
+         * Collection
+         * Iterable
+         * Iterator
+         * Map
+         * Enumeration
+         * CharSequence
+         */
+        public InternalAssert isEmpty(Object obj) {
+            if (!this.status) return this;
+            if (obj instanceof Collection) {
+                if (CollUtil.isNotEmpty((Collection<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Iterable) {
+                if (CollUtil.isNotEmpty((Iterable<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Iterator) {
+                if (CollUtil.isNotEmpty((Iterator<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Map) {
+                if (CollUtil.isNotEmpty((Map<?, ?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof Enumeration) {
+                if (CollUtil.isNotEmpty((Enumeration<?>) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            if (obj instanceof CharSequence) {
+                if (StrUtil.isNotEmpty((CharSequence) obj)) {
+                    this.status = false;
+                    return this;
+                }
+            }
+            return this;
+        }
+
+
+        /**
+         * 断言一个表达式为假
+         */
+        public InternalAssert isFalse(Boolean expression) {
+            if (!this.status) return this;
+            if (BooleanUtil.isTrue(expression)) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个表达式为真
+         */
+        public InternalAssert isTrue(Boolean expression) {
+            if (!this.status) return this;
+            if (BooleanUtil.isFalse(expression)) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言字符串包含至少一个字串
+         */
+        public InternalAssert contains(CharSequence sourceStr, CharSequence subStr) {
+            if (!this.status) return this;
+            if (!StrUtil.contains(sourceStr, subStr)) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言字符串不包含一个字串
+         */
+        public InternalAssert notContains(CharSequence sourceStr, CharSequence subStr) {
+            if (!this.status) return this;
+            if (StrUtil.contains(sourceStr, subStr)) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个集合包含一个元素
+         */
+        public InternalAssert contains(Collection<?> source, Object target) {
+            if (!this.status) return this;
+            if (!CollUtil.contains(source, target)) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个集合不包含一个元素
+         */
+        public InternalAssert notContains(Collection<?> source, Object target) {
+            if (!this.status) return this;
+            if (CollUtil.contains(source, target)) {
+                this.status = false;
+            }
+            return this;
+        }
+
+        /**
+         * 断言一个自定义内容
+         */
+        public InternalAssert state(Supplier supplier) {
+            if (!this.status) return this;
+            if (!supplier.supply()) {
+                this.status = false;
+            }
+            return this;
         }
     }
 }

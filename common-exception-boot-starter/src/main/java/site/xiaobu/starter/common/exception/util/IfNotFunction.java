@@ -1,10 +1,11 @@
 package site.xiaobu.starter.common.exception.util;
 
+
 /**
- * 可以实现该接口做自定义断言逻辑
+ * 可以实现该接口做断言失败的处理
  * 配合 Asserts 类使用
  */
 @FunctionalInterface
-public interface Supplier {
-    boolean supply();
+public interface IfNotFunction {
+    Object exec();
 }
