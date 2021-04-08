@@ -21,6 +21,7 @@
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <hutool.version>5.6.1</hutool.version>
         <lombok.version>1.18.20</lombok.version>
+        <mybatis-spring-starter.version>2.1.4</mybatis-spring-starter.version>
     </properties>
 
     <dependencies>
@@ -71,6 +72,16 @@
             <!-- SpringCloudAlibaba pom -->
 
             <!-- mybatis 相关 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>

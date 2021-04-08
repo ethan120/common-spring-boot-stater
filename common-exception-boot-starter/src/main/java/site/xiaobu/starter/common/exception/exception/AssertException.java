@@ -12,6 +12,7 @@ public class AssertException extends ApplicationException {
     private IResponse response;
 
     public AssertException(IResponse response) {
+        super(response.getMessage());
         this.response = response;
     }
 }

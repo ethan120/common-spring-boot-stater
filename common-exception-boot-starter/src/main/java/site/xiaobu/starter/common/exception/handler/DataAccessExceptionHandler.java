@@ -1,8 +1,6 @@
 package site.xiaobu.starter.common.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,10 +27,15 @@ public class DataAccessExceptionHandler {
      * @param e 异常
      * @return 异常结果
      */
-    @ExceptionHandler(value = DataAccessException.class)
+    @ExceptionHandler(value = {DataAccessException.class})
     public R<?> handleDataAccessException(DataAccessException e) {
         log.error("发生数据访问异常", e);
-        SQLExEnum exEnum = SQLExEnum.valueOf(e.getClass().getSimpleName());
+        SQLExEnum exEnum = null;
+        try {
+            exEnum = SQLExEnum.valueOf(e.getClass().getSimpleName());
+        } catch (IllegalArgumentException ignore) {
+            exEnum = SQLExEnum.DataAccessException;
+        }
         int code = exEnum.getCode();
         return Resp.newFailed(code, exEnum.getMessage());
     }
