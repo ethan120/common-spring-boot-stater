@@ -1,4 +1,4 @@
-package site.xiaobu.starter.common.exception.exception;
+package site.xiaobu.starter.common.base;
 
 /**
  * 程序异常

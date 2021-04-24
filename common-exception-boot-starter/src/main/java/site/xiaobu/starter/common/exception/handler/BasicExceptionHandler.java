@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import site.xiaobu.starter.common.base.R;
 import site.xiaobu.starter.common.base.Resp;
 import site.xiaobu.starter.common.constant.HttpStatus;
-import site.xiaobu.starter.common.exception.exception.ApplicationException;
+import site.xiaobu.starter.common.base.ApplicationException;
 import site.xiaobu.starter.common.exception.exception.AssertException;
 
 import javax.annotation.PostConstruct;

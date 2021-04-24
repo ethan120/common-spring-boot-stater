@@ -1,6 +1,7 @@
 package site.xiaobu.starter.common.exception.exception;
 
 import lombok.Getter;
+import site.xiaobu.starter.common.base.ApplicationException;
 import site.xiaobu.starter.common.base.IResponse;
 
 /**
